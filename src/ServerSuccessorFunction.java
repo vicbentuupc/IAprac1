@@ -11,8 +11,8 @@ public class ServerSuccessorFunction implements SuccessorFunction {
         for (int i = 0; i < boardArray.length; i++) {
             int[] newBoardArray = boardArray.clone();
             newBoardArray[i] = (newBoardArray[i] + 1) % 2;
-            ServerBoard newBoard = new ServerBoard();
-            successors.add(newBoard);
+            //ServerBoard newBoard = new ServerBoard();
+            //successors.add(newBoard);
         }
         return successors;
     }

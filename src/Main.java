@@ -1,8 +1,11 @@
+import IA.DistFS.Requests;
+import IA.DistFS.Servers;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -10,10 +13,14 @@ import java.util.Properties;
 public class Main {
 
     public static void main(String[] args) throws Exception{
-        int [] prob = new int []{1 ,0, 1, 1, 0};
-        int [] sol = new int[]{1, 1, 0, 1, 0};
 
-        ServerBoard board = new ServerBoard();
+        int users = 10;
+        int requests = 10;
+        int servers = 10;
+        int nrep = 3;
+        int seed = new Date().hashCode();
+
+        ServerBoard board = new ServerBoard(1, new Requests(users, requests, seed), new Servers(servers, nrep, seed), users);
 
         // Create the Problem object
         Problem p = new  Problem(board,
@@ -36,6 +43,12 @@ public class Main {
 
         // You can access also to the goal state using the
         // method getGoalState of class Search
+
+
+
+        for (int i = 0; i < board.solution.size(); i++) {
+            System.out.println("User " + i + " -> " + board.solution.get(i));
+        }
 
     }
 
