@@ -22,7 +22,7 @@ public class Main {
         Requests r = new Requests(users, requests, seed);
         Servers s = new Servers(servers, nrep, seed);
 
-        ServerBoard board = new ServerBoard(1, r, s, users);
+        ServerBoard board = new ServerBoard(2, r, s, users);
 
         Problem p = new  Problem(board,
                 new ServerSuccessorFunction(),
