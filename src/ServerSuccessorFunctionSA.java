@@ -4,7 +4,7 @@ import aima.search.framework.SuccessorFunction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerSuccessorFunction implements SuccessorFunction {
+public class ServerSuccessorFunctionSA implements SuccessorFunction {
 
     public List<Successor> getSuccessors(Object state) {
         List<Successor> list = new ArrayList<Successor>();

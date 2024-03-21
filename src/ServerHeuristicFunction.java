@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class ServerHeuristicFunction implements aima.search.framework.HeuristicFunction{
 
     public int HeuristicMode = 1;
@@ -13,6 +15,9 @@ public class ServerHeuristicFunction implements aima.search.framework.HeuristicF
     }
 
     private double Heuristic1(Object o){ // Min. transmission time of the server that takes more time for his requests.
-        return 0;
+        //return 0;
+        Random rand = new Random();
+        int rand_int1 = rand.nextInt(10);
+        return rand_int1;
     }
 }

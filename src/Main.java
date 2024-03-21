@@ -29,6 +29,11 @@ public class Main {
                 new ServerGoalTest(),
                 new ServerHeuristicFunction());
 
+
+        for (int i = 0; i < board.solution.size(); i++) System.out.println("User " + i + " -> " + board.solution.get(i));
+        for (int i = 0; i < r.size(); ++i) System.out.println("File " + r.getRequest(i)[1] + ": " + s.fileLocations(r.getRequest(i)[1]));
+        for (int i = 0; i < ServerBoard.user2file.size(); ++i) System.out.println("User " + i + " wants files: " + ServerBoard.user2file.get(i));
+
         // Search alg = new SimulatedAnnealingSearch(200000, 10, 5, 0.001);
         Search alg = new HillClimbingSearch();
         SearchAgent agent = new SearchAgent(p, alg);
@@ -37,8 +42,8 @@ public class Main {
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
 
-
-        for (int i = 0; i < board.solution.size(); i++) System.out.println("User " + i + " -> " + board.solution.get(i));
+        ServerBoard finalState = (ServerBoard) alg.getGoalState();
+        for (int i = 0; i < finalState.solution.size(); i++) System.out.println("User " + i + " -> " + finalState.solution.get(i));
         for (int i = 0; i < r.size(); ++i) System.out.println("File " + r.getRequest(i)[1] + ": " + s.fileLocations(r.getRequest(i)[1]));
         for (int i = 0; i < ServerBoard.user2file.size(); ++i) System.out.println("User " + i + " wants files: " + ServerBoard.user2file.get(i));
 

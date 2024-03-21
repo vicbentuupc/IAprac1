@@ -6,6 +6,7 @@ import java.util.*;
 public class ServerBoard {
 
     //representation
+    static public Servers servers;
     static public Map<Integer, Integer> index2user_id; // user_index -> user_id
     static public Vector<Vector<Integer>> user2file; // user_index -> file_id
     public Vector<Vector<Integer>> solution; // user_index -> server_id
@@ -13,6 +14,7 @@ public class ServerBoard {
     //constructor(initial solution)
     //mode == 1(random), mode == 2(nearest server)
     public ServerBoard(int mode, Requests r, Servers s, int usr_num) { //pasarle el #usr(es un parametro que tu das en el main)
+        servers = s;
         index2user_id = new HashMap<Integer, Integer>();
         user2file = new Vector<>(usr_num);
         for (int i = 0; i < usr_num; i++) user2file.add(new Vector<Integer>(0));
@@ -34,21 +36,28 @@ public class ServerBoard {
         if(mode == 1) {
             for (int i = 0; i < user2file.size(); i++) {
                 for (int j = 0; j < user2file.get(i).size(); j++) {
-                    solution.get(i).add(random_server(user2file.get(i).get(j), s));
+                    solution.get(i).add(random_server(user2file.get(i).get(j)));
                 }
             }
         }
         else if(mode == 2){
             for (int i = 0; i < user2file.size(); i++) {
                 for (int j = 0; j < user2file.get(i).size(); j++) {
-                    solution.get(i).add(nearest_server(index2user_id.get(i) ,user2file.get(i).get(j), s));
+                    solution.get(i).add(nearest_server(index2user_id.get(i) ,user2file.get(i).get(j)));
                 }
             }
         }
     }
 
+    public ServerBoard(ServerBoard board){
+        this.solution = new Vector<Vector<Integer>>(); // Initialize a new outer Vector
+        for (Vector<Integer> innerVector : board.solution) {
+            this.solution.add(new Vector<Integer>(innerVector)); // Deep copy each inner Vector
+        }
+    }
+
     //"operators functions"
-    public void change_serv(int usrind, int fileind, int serv, Servers s){
+    public void change_serv(int usrind, int fileind, int serv){
         solution.get(usrind).set(fileind, serv);
     }
 
@@ -62,8 +71,8 @@ public class ServerBoard {
     //"auxiliar functions"
 
     //return a random serverID which contains the fileID f
-    public int random_server(int f, Servers  s) {
-        Set servs = (Set) s.fileLocations(f);
+    public int random_server(int f) {
+        Set servs = (Set) servers.fileLocations(f);
         int size = servs.size();
         //Generate random integers in range 0 to size
         Random rand = new Random();
@@ -72,15 +81,15 @@ public class ServerBoard {
     }
 
     //return a random serverID which contains the fileID f
-    public int nearest_server(int us, int f, Servers  s) {
-        Set servs = (Set) s.fileLocations(f);
+    public int nearest_server(int us, int f) {
+        Set servs = (Set) servers.fileLocations(f);
         int size = servs.size();
         Object[] servs_array = servs.toArray(new Integer[size]);
         //buscar el mas cercano
         int actual_serv = (int) servs_array[0];
         int min_t = Integer.MAX_VALUE;
         for (int i = 0; i < servs_array.length; i++) {
-            int time = s.tranmissionTime((Integer) servs_array[i], us);
+            int time = servers.tranmissionTime((Integer) servs_array[i], us);
             if (time < min_t){
                 actual_serv = (int) servs_array[i];
                 min_t = time;
