@@ -40,6 +40,7 @@ public class ServerHeuristicFunction implements aima.search.framework.HeuristicF
         nums = nserv;
     }
 
+
     /*public static void Vectorinicial(Object o){
         ServerBoard board = (ServerBoard) o;
         int v = 0;
