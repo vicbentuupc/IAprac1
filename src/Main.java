@@ -24,6 +24,9 @@ public class Main {
 
         ServerBoard board = new ServerBoard(2, r, s, users);
 
+        //ServerHeuristicFunction.Vectorinicial(board);
+        ServerHeuristicFunction.numserv(servers);
+
         Problem p = new  Problem(board,
                 new ServerSuccessorFunction(),
                 new ServerGoalTest(),
